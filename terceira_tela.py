@@ -14,7 +14,7 @@ class BemVindo(FloatLayout):
          self.orientation='horizontal'
          self.spacing= 5
          self.padding=[20, 10]
-         Window.clearcolor = get_color_from_hex('#380659') 
+         Window.clearcolor = get_color_from_hex('#620096') 
 
          self.nota = Label(
              text='Lista de Contatos:',
