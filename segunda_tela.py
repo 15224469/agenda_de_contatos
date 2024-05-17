@@ -5,7 +5,6 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
 from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
 
 class Adicionar(FloatLayout):
     def __init__(self, **kwargs):
