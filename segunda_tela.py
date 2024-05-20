@@ -1,3 +1,6 @@
+from conexaobd import *
+from bdcontatos import *
+import sqlite3
 from kivy.app import App
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
@@ -5,6 +8,8 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
 from kivy.uix.label import Label
+
+
 
 class Adicionar(FloatLayout):
     def __init__(self, **kwargs):
@@ -35,7 +40,7 @@ class Adicionar(FloatLayout):
             background_normal='',  
             border=(1, 1, 1, 1)  
         )
-        self.add_widget(self.nome)
+        self.add_widget(self.nome) 
 
         self.email = TextInput(
             hint_text="E-mail: ",
@@ -61,8 +66,9 @@ class Adicionar(FloatLayout):
             font_name = 'Georgia',
             background_color=get_color_from_hex('ffdde8'),  
             background_normal='',  
-            border=(1, 1, 1, 1)  
-        )
+            border=(1, 1, 1, 1) 
+          )
+        
         self.add_widget(self.celular)
 
         self.data = TextInput(
@@ -86,7 +92,22 @@ class Adicionar(FloatLayout):
              font_name = 'Georgia',
             background_color = ('8208b3')
               )
+        self.button2.bind(on_press=self.adicionar_banco)
         self.add_widget(self.button2)
+
+        def adicionar_banco(self, instance):
+            conn = sqlite3.connect('contatos.db')
+            cursor = conn.cursor()
+
+            cursor.execute('''
+            INSERT INTO contato (nome, email, numero, nascimento) VALUES (%s,%s,%s,%s)
+                           ''')
+            
+            conn.commit()
+            conn.close()
+
+            print("Contato adicionado")
+
 
 class TelaAdicionar(App):
     def build(self):
