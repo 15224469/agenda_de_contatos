@@ -84,31 +84,7 @@ class Adicionar(FloatLayout):
             border=(1, 1, 1, 1) 
         )
         self.add_widget(self.data)
-
-        self.button2 = Button(
-            size_hint = (.1, .05),
-            pos_hint = {'x': .45, 'y':.04} ,
-            text = 'Adicionar',
-             font_name = 'Georgia',
-            background_color = ('8208b3')
-              )
-        self.button2.bind(on_press=self.adicionar_banco)
-        self.add_widget(self.button2)
-
-        def adicionar_banco(self, instance):
-            conn = sqlite3.connect('contatos.db')
-            cursor = conn.cursor()
-
-            cursor.execute('''
-            INSERT INTO contato (nome, email, numero, nascimento) VALUES (%s,%s,%s,%s)
-                           ''')
-            
-            conn.commit()
-            conn.close()
-
-            print("Contato adicionado")
-
-
+        
 class TelaAdicionar(App):
     def build(self):
         return Adicionar()
