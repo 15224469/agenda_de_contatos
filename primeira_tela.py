@@ -30,8 +30,9 @@ class BemVindo(FloatLayout):
              size_hint = (.4, .1),
              pos_hint = {'x': .3, "y": .5} ,
              background_color = get_color_from_hex('#560CAD'))
-             
+         self.but1.bind(on_press=self.Lista)
          self.add_widget(self.but1)
+             
 
          self.but2 = Button(
              text='Adicionar Contato',

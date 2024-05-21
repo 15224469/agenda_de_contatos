@@ -8,9 +8,9 @@ from kivy.core.window import Window
 
 
 
-class BemVindo(FloatLayout):
+class Lista(FloatLayout):
       def __init__(self, **kwargs):
-         super(BemVindo, self).__init__(**kwargs)
+         super(Lista, self).__init__(**kwargs)
          self.orientation='horizontal'
          self.spacing= 5
          self.padding=[20, 10]
@@ -37,7 +37,7 @@ class BemVindo(FloatLayout):
 
 class MyApp(App):
      def build(self):
-          return BemVindo()
+          return Lista()
      
 MyApp().run()     
 
