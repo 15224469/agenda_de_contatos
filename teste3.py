@@ -5,9 +5,14 @@ from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
+from bdcontatos import insert
+from conexaobd import connect
+
+mydb = connect()
 
 class ListaContatos(FloatLayout):
     def __init__(self, **kwargs):
+        mydb = connect()
         super(ListaContatos, self).__init__(**kwargs)
         self.spacing = 5
         self.padding = [20, 10]
@@ -21,6 +26,23 @@ class ListaContatos(FloatLayout):
             pos_hint={'x': .013, "y": .7}
         )
         self.add_widget(self.nota)
+
+        texto = ""  # Inicializa a variável texto
+
+        cursor = mydb.cursor()
+        cursor.execute("SELECT * FROM contato")
+        contatos = cursor.fetchall()
+
+        for contato in contatos:
+            texto += f"Nome: {contato[0]}, Email: {contato[1]}, Número: {contato[2]}, Nascimento: {contato[3]}\n"
+        
+        self.list = Label(
+            text=texto, font_size=16,
+            font_name='Georgia',
+            size_hint_y=None,
+            pos_hint={'x': .016, "y": .5}
+        )
+        self.add_widget(self.list)  # Adiciona o widget self.list à instância de ListaContatos
 
         self.but1 = Button(
             text='Voltar a tela de início',
@@ -115,8 +137,6 @@ class Adicionar(FloatLayout):
             size_hint=[.4, .1],
             multiline=False,
             pos_hint={'x': .3, "y": .7},
-            padding_y=[10, 10],
-            padding_x=[10, 10],
             font_name='Georgia',
             background_color=get_color_from_hex('ffdde8'),
             background_normal='',
@@ -129,8 +149,6 @@ class Adicionar(FloatLayout):
             size_hint=[.4, .1],
             multiline=False,
             pos_hint={'x': .3, "y": .5},
-            padding_y=[10, 10],
-            padding_x=[10, 10],
             font_name='Georgia',
             background_color=get_color_from_hex('ffdde8'),
             background_normal='',
@@ -143,8 +161,6 @@ class Adicionar(FloatLayout):
             size_hint=[.4, .1],
             multiline=False,
             pos_hint={'x': .3, "y": .3},
-            padding_y=[10, 10],
-            padding_x=[10, 10],
             font_name='Georgia',
             background_color=get_color_from_hex('ffdde8'),
             background_normal='',
@@ -153,12 +169,10 @@ class Adicionar(FloatLayout):
         self.add_widget(self.celular)
 
         self.data = TextInput(
-            hint_text="Data de nascimento: **/**/****",
+            hint_text="Data de nascimento: ano-mês-dia",
             size_hint=[.4, .1],
             multiline=True,
             pos_hint={'x': .3, "y": .1},
-            padding_y=[10, 10],
-            padding_x=[10, 10],
             font_name='Georgia',
             background_color=get_color_from_hex('ffdde8'),
             background_normal='',
@@ -173,12 +187,18 @@ class Adicionar(FloatLayout):
             font_name='Georgia',
             background_color=get_color_from_hex('8208b3')
         )
-        self.button2.bind(on_press=self.lista)
+        self.button2.bind(on_press=self.register_contato)
         self.add_widget(self.button2)
 
-        def lista(self, instance):
+    def register_contato(self, instance):
+        name = self.nome.text
+        email = self.email.text
+        celular = self.celular.text
+        data = self.data.text
+        if name and email and celular and data:
+            contato = insert(mydb, name, email, celular, data)
             self.limpar_campos()
-        App.get_running_app().root.switch_to(ListaContatos())
+            self.lista(instance)
 
     def limpar_campos(self):
         self.nome.text = ''
@@ -202,6 +222,8 @@ class GerenciadorTelas(FloatLayout):
 class MinhaApp(App):
     def build(self):
         return GerenciadorTelas()
+    
+    
 
 if __name__ == '__main__':
     MinhaApp().run()
