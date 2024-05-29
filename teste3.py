@@ -66,6 +66,19 @@ class ListaContatos(FloatLayout):
         App.get_running_app().root.switch_to(BemVindo())
 
     def excluir_contato(self, instance):
+        text_inputs = [widget for widget in self.children if isinstance(widget, TextInput)]
+        nome_excluir = self.nome.text
+        email_excluir = self.email.text
+        numero_excluir = self.numero.text
+        nascimento_excluir = self.nascimento
+
+        for text_input in text_input:
+            if text_input.text == nome_excluir or \
+                text_input.text == email_excluir or \
+                text_input.text == numero_excluir or \
+                text_input.text == nascimento_excluir:
+                self.remove_widget(text_input)
+
         self.clear_widgets()
         self.add_widget(self.nota)
 
