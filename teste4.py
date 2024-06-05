@@ -77,24 +77,12 @@ class ExcluirContato(FloatLayout):
             font_size=40,
             font_name='Georgia',
             size_hint_y=None,
-            pos_hint={'x': .013, "y": .8}
+            pos_hint={'x': .003, "y": .8}
         )
         self.add_widget(self.label)
 
         self.nome = TextInput(
             hint_text="Nome Completo: ",
-            size_hint=[.4, .1],
-            multiline=False,
-            pos_hint={'x': .3, "y": .7},
-            font_name='Georgia',
-            background_color=get_color_from_hex('ffdde8'),
-            background_normal='',
-            border=(1, 1, 1, 1)
-        )
-        self.add_widget(self.nome)
-
-        self.email = TextInput(
-            hint_text="E-mail: ",
             size_hint=[.4, .1],
             multiline=False,
             pos_hint={'x': .3, "y": .5},
@@ -103,7 +91,7 @@ class ExcluirContato(FloatLayout):
             background_normal='',
             border=(1, 1, 1, 1)
         )
-        self.add_widget(self.email)
+        self.add_widget(self.nome)
 
         self.celular = TextInput(
             hint_text="Número de telefone: (DDD) ****-****",
@@ -117,21 +105,9 @@ class ExcluirContato(FloatLayout):
         )
         self.add_widget(self.celular)
 
-        self.data = TextInput(
-            hint_text="Data de nascimento: ano-mês-dia",
-            size_hint=[.4, .1],
-            multiline=True,
-            pos_hint={'x': .3, "y": .1},
-            font_name='Georgia',
-            background_color=get_color_from_hex('ffdde8'),
-            background_normal='',
-            border=(1, 1, 1, 1)
-        )
-        self.add_widget(self.data)
-
         self.button2 = Button(
-            size_hint=(.1, .05),
-            pos_hint={'x': .45, 'y': .04},
+            size_hint=(.1, .07),
+            pos_hint={'x': .45, 'y': .07},
             text='Excluir',
             font_name='Georgia',
             background_color=get_color_from_hex('8208b3')
@@ -141,21 +117,15 @@ class ExcluirContato(FloatLayout):
 
     def excluir_contato(self, instance):
         nome = self.nome.text
-        email = self.email.text
         celular = self.celular.text
-        data = self.data.text
-        if nome or email or celular or data:
+        if nome or celular:
             cursor = mydb.cursor()
             query = "DELETE FROM contato WHERE "
             conditions = []
             if nome:
                 conditions.append(f"nome = '{nome}'")
-            if email:
-                conditions.append(f"email = '{email}'")
             if celular:
                 conditions.append(f"numero = '{celular}'")
-            if data:
-                conditions.append(f"nascimento = '{data}'")
             query += " AND ".join(conditions)
             cursor.execute(query)
             mydb.commit()
@@ -164,9 +134,7 @@ class ExcluirContato(FloatLayout):
 
     def limpar_campos(self):
         self.nome.text = ''
-        self.email.text = ''
         self.celular.text = ''
-        self.data.text = ''
 
     def lista(self, instance):
         App.get_running_app().root.switch_to(ListaContatos())
