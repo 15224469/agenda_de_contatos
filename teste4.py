@@ -250,31 +250,9 @@ class Adicionar(FloatLayout):
             font_name='Georgia',
             background_color=get_color_from_hex('8208b3')
         )
-        self.button2.bind(on_press=self.verifica_campo)
+        self.button2.bind(on_press=self.register_contato)
         self.add_widget(self.button2)
         
-      
-        
-    def verifica_campo(self, nome, email, celular, data):
-        nome = self.nome
-        email = self.email
-        celular = self.celular
-        data = self.data
-        
-        print(nome, email, celular, data)
-              
-        if nome or email or celular or data == '':
-            self.mostrar_popup
-        else:
-            self.register_contato
-            
-    def mostrar_popup(self,instance):
-        content = BoxLayout(orientation='vertical')
-        content.add_widget(Label('prencha todos os campos!'))
-        
-        popup = Popup(title='ERRO', content=content, size_hint=(None, None), size=(400, 200))
-        popup.open()
-
     def register_contato(self, instance):
         name = self.nome.text
         email = self.email.text
