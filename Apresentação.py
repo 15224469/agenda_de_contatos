@@ -79,15 +79,15 @@ class ExcluirContato(FloatLayout):
             font_size=40,
             font_name='Georgia',
             size_hint_y=None,
-            pos_hint={'x': .003, "y": .8}
+            pos_hint={'x': .003, "y": .65}
         )
         self.add_widget(self.label)
 
         self.nome = TextInput(
             hint_text="Nome Completo: ",
-            size_hint=[.4, .1],
+            size_hint=[.6, .1],
             multiline=False,
-            pos_hint={'x': .3, "y": .5},
+            pos_hint={'x': .2, "y": .5},
             font_name='Georgia',
             background_color=get_color_from_hex('ffdde8'),
             background_normal='',
@@ -97,9 +97,9 @@ class ExcluirContato(FloatLayout):
 
         self.celular = TextInput(
             hint_text="Número de telefone: (DDD) *-*",
-            size_hint=[.4, .1],
+            size_hint=[.6, .1],
             multiline=False,
-            pos_hint={'x': .3, "y": .3},
+            pos_hint={'x': .2, "y": .3},
             font_name='Georgia',
             background_color=get_color_from_hex('ffdde8'),
             background_normal='',
