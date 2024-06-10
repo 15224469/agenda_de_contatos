@@ -35,7 +35,7 @@ class ListaContatos(FloatLayout):
         contatos = cursor.fetchall()
 
         for contato in contatos:
-            texto += f"Nome: {contato[0]}, Email: {contato[1]}, Número: {contato[2]}, Nascimento: {contato[3]}\n"
+            texto += f"Nome: {contato[0]}, Número: {contato[2]}\n"
         
         self.list = Label(
             text=texto, font_size=16,
@@ -108,14 +108,24 @@ class ExcluirContato(FloatLayout):
         self.add_widget(self.celular)
 
         self.button2 = Button(
-            size_hint=(.1, .07),
-            pos_hint={'x': .45, 'y': .07},
+            size_hint=(.2, .07),
+            pos_hint={'x': .40, 'y': .07},
             text='Excluir',
             font_name='Georgia',
             background_color=get_color_from_hex('8208b3')
         )
         self.button2.bind(on_press=self.excluir_contato)
         self.add_widget(self.button2)
+
+        self.button8 = Button(
+            size_hint=(.2, .07),
+            pos_hint={'x': .40, 'y': .2},
+            text='Voltar',
+            font_name='Georgia',
+            background_color=get_color_from_hex('8208b3')
+        )
+        self.button8.bind(on_press=self.lista)
+        self.add_widget(self.button8)
         
 
     def excluir_contato(self, instance):
@@ -249,7 +259,7 @@ class Adicionar(FloatLayout):
             font_size=20,
             font_name='Georgia',
             size_hint_y=None,
-            pos_hint={'x': .3, "y": .9},
+            pos_hint={'x': .2, "y": .9},
             color=(1, 0, 0, 1)
         )
         self.add_widget(self.error_label)
